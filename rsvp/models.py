@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class Meal(models.model):
+class Meal(models.Model):
     name = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=200, blank=False)
 
 
-class Guest(models.model):
+class Guest(models.Model):
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=50, blank=False)
     email = models.EmailField(blank=False)
@@ -18,7 +18,7 @@ class Guest(models.model):
     text = models.TextField(blank=True)
 
 
-class Party(models.model):
+class Party(models.Model):
     num_adults = models.IntegerField(default=1, null=False)
     num_kids = models.IntegerField(default=0, null=False)
     primary_contact = models.ForeignKey(Guest, related_name='party')
