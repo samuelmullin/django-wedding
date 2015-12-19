@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rsvp'
+    'rsvp',
+    'twitter_bootstrap',
+    'crispy_forms'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -123,4 +125,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0755
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+STATICFILES_DIRS = (
+    os.path.join(MEDIA_ROOT, "common"),
+)
