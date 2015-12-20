@@ -14,7 +14,10 @@
             {% crispy partyform partyform.helper %}
         {% endif %}
         {% if num_adults and guestformset %}
-            {% crispy guestformset %}
+            {% crispy guestformset.management_form %}
+            {% for guestform in guestformset %}
+                {% crispy guestform %}
+            {% endfor %}
         {% endif %}
         </div>
         </form>

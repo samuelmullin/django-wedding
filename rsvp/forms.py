@@ -109,5 +109,5 @@ class GuestForm(forms.Form):
             'rsvp',
             'meal_choice',
             'accom_choice',
-            StrictButton('Submit', css_class='btn-default'),
+            Submit('submit', 'Next', css_class='btn-default'),
         )

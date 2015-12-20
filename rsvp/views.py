@@ -5,7 +5,6 @@ from django.forms.formsets import formset_factory
 
 
 class RSVP(TemplateView):
-    GuestFormSet = None
     partyform = PartyForm()
     template_name = 'rsvp.html'
     num_adults = 0
@@ -30,13 +29,15 @@ class RSVP(TemplateView):
         if self.party_form.is_valid():
             self.num_adults = int(self.party_form.data['num_adults']) if self.party_form.data['num_adults'] else 0
             self.num_kids = int(self.party_form.data['num_kids']) if self.party_form.data['num_kids'] else 0
-            self.GuestFormSet = formset_factory(GuestForm, extra=int(self.num_adults))
+            GuestFormSet=formset_factory(GuestForm, extra=int(self.num_adults))
+            guestformset = GuestFormSet(request.POST)
+            import pdb;  pdb.set_trace()
 
         context = {
             'num_adults': self.num_adults,
             'num_kids': self.num_kids,
             'partyform': self.party_form,
-            'guestformset': self.GuestFormSet
+            'guestformset': guestformset
         }
         print context
 
