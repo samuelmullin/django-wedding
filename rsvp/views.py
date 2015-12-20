@@ -1,44 +1,49 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from .forms import GuestForm, PartyForm
 from django.forms.formsets import formset_factory
+
+from .forms import AdultForm, PartyForm
+from rsvp.forms import KidForm
 
 
 class RSVP(TemplateView):
-    partyform = PartyForm()
     template_name = 'rsvp.html'
-    num_adults = 0
-    num_kids = 0
-
-    def dispatch(self, request, *args, **kwargs):
-        return super(RSVP, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        self.GuestFormSet = formset_factory(GuestForm, extra=int(self.num_adults))
+        defualt_adults = 1
+        defualt_kids = 1
+        max = 10
+
+        party_form = PartyForm()
+
+        AdultFormSet = formset_factory(AdultForm, extra=defualt_adults, max_num=max)
+        adults_formset = AdultFormSet()
+
+        KidsFormSet = formset_factory(KidForm, extra=defualt_kids, max_num=max)
+        kids_formset = KidsFormSet()
+
         context = {
-            'partyform': self.partyform,
-            'guestformset': self.GuestFormSet,
-            'num_adults': self.num_adults,
-            'num_kids': self.num_kids,
+            'party_form': party_form,
+            'adults_formset': adults_formset,
+            'kids_formset': kids_formset,
         }
-        print context
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        self.party_form = PartyForm(request.POST)
-        if self.party_form.is_valid():
-            self.num_adults = int(self.party_form.data['num_adults']) if self.party_form.data['num_adults'] else 0
-            self.num_kids = int(self.party_form.data['num_kids']) if self.party_form.data['num_kids'] else 0
-            GuestFormSet=formset_factory(GuestForm, extra=int(self.num_adults))
-            guestformset = GuestFormSet(request.POST)
-            import pdb;  pdb.set_trace()
+
+        party_form = PartyForm(request.POST)
+        AdultFormSet = formset_factory(AdultForm)
+        adult_formset = AdultFormSet(request.POST)
+        KidsFormSet = formset_factory(KidForm)
+        kid_formset = KidsFormSet(request.POST)
+        guest_contact = None
+        if party_form.is_valid() and adult_formset.is_valid and kid_formset.is_valid():
+            # party form Guest will be the contact for all other guests created here.
+            pass
 
         context = {
-            'num_adults': self.num_adults,
-            'num_kids': self.num_kids,
-            'partyform': self.party_form,
-            'guestformset': guestformset
+            'party_form': party_form,
+            'adults_formset': AdultFormSet,
+            'kids_formset': KidsFormSet,
         }
-        print context
-
         return render(request, self.template_name, context)
