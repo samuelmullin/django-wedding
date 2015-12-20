@@ -6,7 +6,7 @@ from django.forms.formsets import formset_factory
 
 class RSVP(TemplateView):
     GuestFormSet = None
-    party_form = PartyForm()
+    partyform = PartyForm()
     template_name = 'rsvp.html'
     num_adults = 0
     num_kids = 0
@@ -15,22 +15,29 @@ class RSVP(TemplateView):
         return super(RSVP, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        GuestFormSet = formset_factory(GuestForm, extra=int(self.num_adults))
-        form = PartyForm()
-        GuestFormSet = formset_factory(GuestForm, extra=int(self.num_adults))
-        return render(request, self.template_name, {'form': form})
+        self.GuestFormSet = formset_factory(GuestForm, extra=int(self.num_adults))
+        context = {
+            'partyform': self.partyform,
+            'guestformset': self.GuestFormSet,
+            'num_adults': self.num_adults,
+            'num_kids': self.num_kids,
+        }
+        print context
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        party_form = PartyForm(request.POST)
-        self.num_adults = int(party_form.data['num_adults']) if party_form.data['num_adults'] else 0
-        num_kids = int(party_form.data['num_kids']) if party_form.data['num_kids'] else 0
-        GuestFormSet = formset_factory(GuestForm, extra=int(self.num_adults))
+        self.party_form = PartyForm(request.POST)
+        if self.party_form.is_valid():
+            self.num_adults = int(self.party_form.data['num_adults']) if self.party_form.data['num_adults'] else 0
+            self.num_kids = int(self.party_form.data['num_kids']) if self.party_form.data['num_kids'] else 0
+            self.GuestFormSet = formset_factory(GuestForm, extra=int(self.num_adults))
 
         context = {
             'num_adults': self.num_adults,
             'num_kids': self.num_kids,
-            'form': party_form,
-            'guestformset': GuestFormSet
+            'partyform': self.party_form,
+            'guestformset': self.GuestFormSet
         }
+        print context
 
         return render(request, self.template_name, context)
