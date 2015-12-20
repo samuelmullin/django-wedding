@@ -15,20 +15,12 @@ class Accommodation(models.Model):
 
 
 class Guest(models.Model):
-    first_name = models.CharField(max_length=50, blank=False)
-    last_name = models.CharField(max_length=50, blank=False)
-    rsvp_date = models.DateField(default=timezone.now)
+    rsvp = models.BooleanField(default=False)
+    name = models.CharField(max_length=100, blank=False)
     email = models.EmailField(blank=True, default='')
     phone = models.CharField(max_length=20, blank=True, default='')
+    rsvp_date = models.DateField(default=timezone.now)
     meal_preference = models.CharField(max_length=50, blank=True, default='')
-    primary_contact = models.BooleanField(default=True)
-    rsvp = models.BooleanField(default=False)
-    text = models.TextField(blank=True, default='')
-
-
-class Party(models.Model):
-    num_adults = models.IntegerField(default=1, null=False)
-    num_kids = models.IntegerField(default=0, null=False)
-    contact = models.ForeignKey(Guest, related_name='party')
     accom_preference = models.CharField(max_length=50, blank=True, default='')
     text = models.TextField(blank=True, default='')
+    party = models.ForeignKey("Guest")
