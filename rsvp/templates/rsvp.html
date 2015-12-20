@@ -1,25 +1,38 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% load rsvp %}
 
 
 <html>
-    <head>
-        <link type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <br />
-        <br />
+<head>
+    <link type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'rsvp.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'rsvp.js' %}"></script>
+</head>
+<body>
+<div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
         <div class='col-sm-6 col-sm-offset-2'>
-        {% if partyform %}
-            {% crispy partyform partyform.helper %}
-        {% endif %}
-        {% if num_adults and guestformset %}
-            {% crispy guestformset.management_form %}
-            {% for guestform in guestformset %}
-                {% crispy guestform %}
-            {% endfor %}
-        {% endif %}
+            {% with form=party_form %}
+                <legend>You</legend>
+                {% form_field form.rsvp %}
+                {% form_field form.name %}
+                {% form_field form.email %}
+            {% endwith %}
         </div>
-        </form>
-    </body>
+        <div class='col-sm-6 col-sm-offset-2 rsvp rsvp-hidden'>
+            <legend>Who is coming with you?</legend>
+            {{ adults_formset }}
+        </div>
+        <div class='col-sm-6 col-sm-offset-2 rsvp rsvp-hidden'>
+            <legend>Any brats?</legend>
+            {{ kids_formset }}
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+</body>
 </html>
