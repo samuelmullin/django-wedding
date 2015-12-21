@@ -4,14 +4,29 @@ from django.db import models
 from django.utils import timezone
 
 
-class Meal(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    description = models.CharField(max_length=200, blank=False)
+class Meals():
+    CHICKEN = 'chicken'
+    VEG = 'veg'
+    FISH = 'fish'
+
+    choices = (
+        (CHICKEN, 'chicken'),
+        (VEG, 'veg'),
+        (FISH, 'fish'),
+    )
 
 
-class Accommodation(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    description = models.CharField(max_length=200, blank=False)
+class Accoms():
+
+    HOTEL = 'hotel'
+    HUT = 'hut'
+    CASTLE = 'castle'
+
+    choices = (
+        (HOTEL, 'Hotel'),
+        (HUT, 'Hut'),
+        (CASTLE, 'Fish'),
+    )
 
 
 class Guest(models.Model):
@@ -20,7 +35,8 @@ class Guest(models.Model):
     email = models.EmailField(blank=True, default='')
     phone = models.CharField(max_length=20, blank=True, default='')
     rsvp_date = models.DateField(default=timezone.now)
-    meal_preference = models.CharField(max_length=50, blank=True, default='')
-    accom_preference = models.CharField(max_length=50, blank=True, default='')
+    meal_preference = models.CharField(max_length=50, choices=Meals.choices)
+    accom_preference = models.CharField(max_length=50, choices=Accoms.choices)
     text = models.TextField(blank=True, default='')
+    kid = models.BooleanField(default=False)
     party = models.ForeignKey("Guest")

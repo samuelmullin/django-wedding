@@ -1,10 +1,12 @@
 from django import forms
-from rsvp.models import Guest
+from rsvp.models import Guest, Meals, Accoms
 
 
 class PartyForm(forms.ModelForm):
     name = forms.CharField(label='Name')
     email = forms.EmailField(label='Email')
+    meal_preference = forms.ChoiceField(label='Meal Choice', choices=Meals.choices)
+    accom_preference = forms.ChoiceField(label='Accommodation Choice', choices=Accoms.choices)
 
     rsvp = forms.ChoiceField(
         label='Can you make it?',
@@ -36,68 +38,11 @@ class PartyForm(forms.ModelForm):
         fields = ['rsvp', 'name', 'email', 'meal_preference', 'accom_preference']
 
 
-class AdultForm(forms.ModelForm):
-
+class GuestForm(forms.ModelForm):
     name = forms.CharField(label='Name')
-    email = forms.EmailField(label='Email')
-    phone = forms.CharField(label='Phone Number')
-
-    meal_choice = forms.ChoiceField(
-        label='Meal Choice',
-        choices=[],
-        widget=forms.Select(
-            attrs={
-                "class": 'form-control',
-            }))
-
-    accom_choice = forms.ChoiceField(
-        label='Accommodation Choice',
-        choices=[],
-        widget=forms.Select(
-            attrs={
-                "class": 'form-control',
-            }))
-
-    text = forms.CharField(
-        label='Comments',
-        widget=forms.TextInput(
-            attrs={
-                "class": 'form-control',
-                "placeholder": "Extra Details - Allergies, etc!"
-            }))
+    meal_preference = forms.ChoiceField(label='Meal Choice', choices=Meals.choices)
+    accom_preference = forms.ChoiceField(label='Accommodation Choice', choices=Accoms.choices)
 
     class Meta:
         model = Guest
-        fields = ['name', 'meal_choice',]
-
-
-class KidForm(forms.Form):
-    name = forms.CharField(label='Name')
-
-    meal_choice = forms.ChoiceField(
-        label='Meal Choice',
-        choices=[],
-        widget=forms.Select(
-            attrs={
-                "class": 'form-control',
-            }))
-
-    accom_choice = forms.ChoiceField(
-        label='Accommodation Choice',
-        choices=[],
-        widget=forms.Select(
-            attrs={
-                "class": 'form-control',
-            }))
-
-    text = forms.CharField(
-        label='Comments',
-        widget=forms.TextInput(
-            attrs={
-                "class": 'form-control',
-                "placeholder": "Extra Details - Allergies, etc!"
-            }))
-
-    class Meta:
-        model = Guest
-        fields = ['name', 'meal_choice', 'accom_choice', 'text']
+        fields = ['name', 'meal_preference', 'accom_preference', 'kid']

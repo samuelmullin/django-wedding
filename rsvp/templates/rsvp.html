@@ -15,21 +15,33 @@
 <div class="container">
     <form action="" method="POST">
         {% csrf_token %}
-        <div class='col-sm-6 col-sm-offset-2'>
+        <div class='col-sm-8 col-sm-offset-2'>
+            <legend>You</legend>
             {% with form=party_form %}
-                <legend>You</legend>
+                {% if form.errors %}{{ form.errors }}{% endif %}
                 {% form_field form.rsvp %}
                 {% form_field form.name %}
                 {% form_field form.email %}
+
+                {% form_field form.num_adults %}
+                {% form_field form.num_kids %}
+
+                {% form_field form.meal_preference %}
+                {% form_field form.accom_preference %}
+
             {% endwith %}
         </div>
-        <div class='col-sm-6 col-sm-offset-2 rsvp rsvp-hidden'>
+        <div class='col-sm-8 col-sm-offset-2 additional-guests rsvp-hidden'>
             <legend>Who is coming with you?</legend>
-            {{ adults_formset }}
-        </div>
-        <div class='col-sm-6 col-sm-offset-2 rsvp rsvp-hidden'>
-            <legend>Any brats?</legend>
-            {{ kids_formset }}
+            {{ guest_formset.management_form }}
+            <div class="adults">
+                <label>Guests</label>
+                {% for guest in guest_formset %}
+                    <div class="guest">
+                        {{ guest }}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
