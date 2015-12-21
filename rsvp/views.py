@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.core.urlresolvers import reverse
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.forms.formsets import formset_factory
 
@@ -31,10 +33,17 @@ class RSVP(TemplateView):
 
         if party_form.is_valid() and guest_formset.is_valid:
             # party form Guest will be the contact for all other guests created here.
-            pass
+            guest_contact = party_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Thank you for RSVPing {}.'.format(guest_contact.name))
+            return redirect(reverse('thank-you'))
 
         context = {
             'party_form': party_form,
             'guest_formset': guest_formset,
         }
         return render(request, self.template_name, context)
+
+
+class RSVPComplete(TemplateView):
+    template_name = 'thank-you.html'
+

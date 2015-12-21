@@ -2,7 +2,7 @@
     {% if field.is_hidden %}
         {{ field }}
     {% else %}
-            <span class="{{ field.name }}_field {% if field.errors %}error{% endif %}" for="{{ field.name }}">
+            <span class="form-group {{ field.name }}_field {% if field.errors %}error{% endif %}" for="{{ field.name }}">
                 <label for="{{ field.name }}">
                     {{ field.label }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
                 </label>

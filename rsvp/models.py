@@ -39,4 +39,4 @@ class Guest(models.Model):
     accom_preference = models.CharField(max_length=50, choices=Accoms.choices)
     text = models.TextField(blank=True, default='')
     kid = models.BooleanField(default=False)
-    party = models.ForeignKey("Guest")
+    party = models.ForeignKey("Guest", null=True)
