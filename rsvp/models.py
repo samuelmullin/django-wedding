@@ -40,3 +40,7 @@ class Guest(models.Model):
     text = models.TextField(blank=True, default='')
     kid = models.BooleanField(default=False)
     party = models.ForeignKey("Guest", null=True)
+
+    def __unicode__(self):
+        return self.name
+

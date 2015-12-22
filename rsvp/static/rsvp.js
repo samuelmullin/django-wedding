@@ -17,7 +17,6 @@ function addRow(selector) {
 
 function removeRow(selector) {
     var total = $('#id_form-TOTAL_FORMS').val();
-    console.log(total);
     if (total != '1') {
         total--;
         $('#id_form-TOTAL_FORMS').val(total);

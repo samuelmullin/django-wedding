@@ -29,11 +29,15 @@ class RSVP(TemplateView):
         party_form = PartyForm(request.POST)
         GuestFormset = formset_factory(GuestForm)
         guest_formset = GuestFormset(request.POST)
-        guest_contact = None
 
-        if party_form.is_valid() and guest_formset.is_valid:
+        if party_form.is_valid() and guest_formset.is_valid():
             # party form Guest will be the contact for all other guests created here.
             guest_contact = party_form.save()
+            for form in guest_formset:
+                instance = form.instance
+                instance.party = guest_contact
+                instance.save()
+
             messages.add_message(request, messages.SUCCESS, 'Thank you for RSVPing {}.'.format(guest_contact.name))
             return redirect(reverse('thank-you'))
 
