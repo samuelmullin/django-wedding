@@ -8,24 +8,26 @@ class Meals():
     CHICKEN = 'chicken'
     VEG = 'veg'
     FISH = 'fish'
+    KIDS = 'kids'
 
     choices = (
-        (CHICKEN, 'chicken'),
-        (VEG, 'veg'),
-        (FISH, 'fish'),
+        (CHICKEN, 'Chicken Supreme'),
+        (VEG, 'Veg Mushroom Risotto'),
+        (FISH, 'Salmon Fillet'),
+        (KIDS, "Kid's Meal - Chicken Strips")
     )
 
 
 class Accoms():
 
+    RESORT = 'resort'
     HOTEL = 'hotel'
-    HUT = 'hut'
-    CASTLE = 'castle'
+    OTHER = 'other'
 
     choices = (
-        (HOTEL, 'Hotel'),
-        (HUT, 'Hut'),
-        (CASTLE, 'Fish'),
+        (RESORT, 'Trillium Resort'),
+        (HOTEL, 'Holiday Inn Express'),
+        (OTHER, "We'll sort our own!"),
     )
 
 
@@ -43,4 +45,3 @@ class Guest(models.Model):
 
     def __unicode__(self):
         return self.name
-
