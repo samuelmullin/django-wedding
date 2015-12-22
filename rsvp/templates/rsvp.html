@@ -1,7 +1,5 @@
 {% load staticfiles %}
-{% load crispy_forms_tags %}
 {% load rsvp %}
-
 
 <html>
 <head>
@@ -22,13 +20,10 @@
                 {% form_field form.rsvp %}
                 {% form_field form.name %}
                 {% form_field form.email %}
-
                 {% form_field form.num_adults %}
                 {% form_field form.num_kids %}
-
                 {% form_field form.meal_preference %}
                 {% form_field form.accom_preference %}
-
             {% endwith %}
         </div>
         <div class='col-sm-10 col-sm-offset-1 additional-guests rsvp rsvp-hidden form-group'>

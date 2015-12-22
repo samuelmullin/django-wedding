@@ -26,6 +26,10 @@ function removeRow(selector) {
 
 $(function () {
 
+    if (document.getElementById('id_rsvp_0').checked) {
+        $('.rsvp').fadeIn();
+    }
+
     $("input[type=radio]").click(function () {
         if (document.getElementById('id_rsvp_0').checked) {
             $('.rsvp').fadeIn();
