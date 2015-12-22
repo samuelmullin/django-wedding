@@ -1,25 +1,48 @@
 {% load staticfiles %}
-{% load crispy_forms_tags %}
-
+{% load rsvp %}
 
 <html>
-    <head>
-        <link type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <br />
-        <br />
-        <div class='col-sm-6 col-sm-offset-2'>
-        {% if partyform %}
-            {% crispy partyform partyform.helper %}
-        {% endif %}
-        {% if num_adults and guestformset %}
-            {% crispy guestformset.management_form %}
-            {% for guestform in guestformset %}
-                {% crispy guestform %}
-            {% endfor %}
-        {% endif %}
+<head>
+    <link type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'rsvp.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'rsvp.js' %}"></script>
+</head>
+<body>
+<div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class='col-sm-10 col-sm-offset-1'>
+            <legend>You</legend>
+            {% with form=party_form %}
+                {% if form.errors %}{{ form.errors }}{% endif %}
+                {% form_field form.rsvp %}
+                {% form_field form.name %}
+                {% form_field form.email %}
+                {% form_field form.num_adults %}
+                {% form_field form.num_kids %}
+                {% form_field form.meal_preference %}
+                {% form_field form.accom_preference %}
+            {% endwith %}
         </div>
-        </form>
-    </body>
+        <div class='col-sm-10 col-sm-offset-1 additional-guests rsvp rsvp-hidden form-group'>
+            <legend>Who is coming with you?</legend>
+            {{ guest_formset.management_form }}
+            <div class="adults">
+                {% for guest in guest_formset %}
+                    <div class="guest form-group">
+                        {{ guest }}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="add-guest btn btn-default">+ Add Guest</button>
+            <button type="button" class="remove-guest btn btn-default">- Remove Guest</button>
+        </div>
+        <div class="col-sm-10 col-sm-offset-1">
+            <button type="submit" class="form-control btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
 </html>
