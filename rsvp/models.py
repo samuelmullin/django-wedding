@@ -12,7 +12,7 @@ class Meals():
 
     choices = (
         (CHICKEN, 'Chicken Supreme'),
-        (VEG, 'Veg Mushroom Risotto'),
+        (VEG, 'Vegetarian Option'),
         (FISH, 'Trout Fillet'),
         (KIDS, "Kid's Meal - Chicken Strips")
     )
