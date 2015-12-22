@@ -6,7 +6,7 @@ class PartyForm(forms.ModelForm):
     name = forms.CharField(label='Name')
     email = forms.EmailField(label='Email')
     meal_preference = forms.ChoiceField(label='Meal Choice', choices=Meals.choices)
-    accom_preference = forms.ChoiceField(label='Accommodation Choice', choices=Accoms.choices)
+    accom_preference = forms.ChoiceField(label='Accommodation Pref', choices=Accoms.choices)
 
     rsvp = forms.ChoiceField(
         label='Can you make it?',
