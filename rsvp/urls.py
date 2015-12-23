@@ -4,6 +4,6 @@ from .views import RSVP
 
 
 urlpatterns = [
-    url(r'^rsvp/$', RSVP.as_view(), name='rsvp'),
+    url(r'^$', RSVP.as_view(), name='rsvp'),
     url(r'^rsvp/thank-you$', RSVPComplete.as_view(), name='thank-you'),
 ]
