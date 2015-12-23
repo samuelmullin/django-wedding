@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rsvp',
     'twitter_bootstrap',
-    'crispy_forms'
+    'crispy_forms',
+    'gunicorn'
 ]
 
 MIDDLEWARE_CLASSES = [

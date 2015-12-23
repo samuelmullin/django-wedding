@@ -4,6 +4,7 @@ yield/.Python
 yield/bin
 yield/include
 yield/lib
+static/
 
 *.ipynb
 *.csv
