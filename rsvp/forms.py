@@ -26,7 +26,7 @@ class GuestForm(forms.ModelForm):
     name = forms.CharField(label='Name', required=False)
     meal_preference = forms.ChoiceField(label='Meal Choice', choices=Meals.choices)
     accom_preference = forms.ChoiceField(label='Accommodation Choice', choices=Accoms.choices)
-    kid = forms.BooleanField(widget=forms.CheckboxInput(), label="Kid (12 and under)", required=False)
+    kid = forms.BooleanField(widget=forms.CheckboxInput(), label="Kid (4-12)", required=False)
 
     class Meta:
         model = Guest
